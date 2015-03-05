@@ -100,17 +100,44 @@ class bst():
         t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE)
         t.communicate(dot_graph)
 
-    def in_order(self):
+    def in_order(self, node):
         '''Return the values in the tree using in-order traversal.'''
-        pass
+        left = self.nodes[node].get('left')
+        right = self.nodes[node].get('right')
+
+        if left:
+            for elem in self.in_order(left):
+                yield elem
+        yield node
+        if right:
+            for elem in self.in_order(right):
+                yield elem
 
     def pre_order(self):
         '''return the values in the tree using pre-order traversal.'''
-        pass
+        left = self.nodes[node].get('left')
+        right = self.nodes[node].get('right')
+
+        yield node
+        if left:
+            for elem in self.in_order(left):
+                yield elem
+        if right:
+            for elem in self.in_order(right):
+                yield elem
 
     def post_order(self):
         '''Return the values in the tree using post-order traversal.'''
-        pass
+        left = self.nodes[node].get('left')
+        right = self.nodes[node].get('right')
+
+        if left:
+            for elem in self.in_order(left):
+                yield elem
+        if right:
+            for elem in self.in_order(right):
+                yield elem
+        yield node
 
     def breadth_first(self):
         '''Return the values in the tree using breadth-first traversal.'''
