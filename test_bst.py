@@ -123,3 +123,23 @@ def test_unbalanced_to_the_left(balanced):
 def test_unbalanced_to_the_right(unbalanced):
     '''Graphs unbalanced to the right should return the appropriate negative value.'''
     assert unbalanced.balance() < 0
+
+
+def test_in_order(balanced):
+    '''Test generator in_order with balanced graph.'''
+    expected = [2, 3, 4, 5, 6, 7, 10, 11]
+    for expected, actual in zip(expected, balanced.in_order()):
+        assert expected == actual
+
+
+
+
+
+
+
+
+
+
+
+
+
