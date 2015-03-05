@@ -113,4 +113,3 @@ if __name__ == '__main__':
        6:{'left': None, 'right': None},
        11:{'left': None, 'right': None}
     }
-    b.print_dot()
