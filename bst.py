@@ -118,8 +118,8 @@ class bst():
         for elem in self._in_order(self.start):
             yield elem
 
-    def pre_order(self, node):
-        '''return the values in the tree using pre-order traversal.'''
+    def _pre_order(self, node):
+        '''Helper function for pre_order method.'''
         left = self.nodes[node].get('left')
         right = self.nodes[node].get('right')
 
@@ -130,19 +130,29 @@ class bst():
         if right:
             for elem in self.in_order(right):
                 yield elem
+
+    def pre_order(self):
+        '''Return the values in the tree using pre-order traversal.'''
+        for elem in self._pre_order(self.start):
+            yield elem
+
+    def _post_order(self, node):
+        '''Helper function for post_order method.'''
+        left = self.nodes[node].get('left')
+        right = self.nodes[node].get('right')
+
+        if left:
+            for elem in self.in_order(left):
+                yield elem
+        if right:
+            for elem in self.in_order(right):
+                yield elem
+        yield node
 
     def post_order(self, node):
         '''Return the values in the tree using post-order traversal.'''
-        left = self.nodes[node].get('left')
-        right = self.nodes[node].get('right')
-
-        if left:
-            for elem in self.in_order(left):
-                yield elem
-        if right:
-            for elem in self.in_order(right):
-                yield elem
-        yield node
+        for elem in self._post_order(self.start):
+            yield elem
 
     def breadth_first(self):
         '''Return the values in the tree using breadth-first traversal.'''
