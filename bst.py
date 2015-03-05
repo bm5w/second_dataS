@@ -2,17 +2,19 @@ class bst():
     def __init__(self):
         self.start = None
         self.nodes = {}
-        self.depth = None
 
-    def _insert(self, node, val, depth):
+    def _insert(self, node, val):
         """Recursive helper method for insert."""
         if node < val:
             if self.nodes[node]['right'] is None:
                 self.nodes[node]['right'] = val
+                print 'val: {}'.format(val)
+                print self.nodes[node]['right']
                 self.nodes[val] = {'left': None, 'right': None}
             else:
                 self._insert(self.nodes[node]['right'], val)
         else:
+            # import pdb; pdb.set_trace()
             if self.nodes[node]['left'] is None:
                 self.nodes[node]['left'] = val
                 self.nodes[val] = {'left': None, 'right': None}
@@ -21,7 +23,7 @@ class bst():
 
     def insert(self, val):
         '''Insert a value into the bst unless already present.'''
-        if self.nodes.contains(val):
+        if self.contains(val):
             return None
         if self.start is None:
             self.start = val
@@ -39,18 +41,36 @@ class bst():
 
     def _depth(self, node):
         '''Helper method for depth.'''
-        if node is None:
-            return 0
-        if self.nodes[node]['left'] and self.nodes[node]['right'] is None:
+        # if node is None:
+        #     return
+        print 'NODE: {}'.format(node)
+        # import pdb; pdb.set_trace()
+        if (self.nodes[node]['left'] is None) and (self.nodes[node]['right'] is None):
             return 1
-        return 1 + max(self._depth(self.nodes[node]['left']), self._depth(self.nodes[node]['right']))
+
+        if self.nodes[node]['left'] is None:
+            left = 0
+        else:
+            left = self._depth(self.nodes[node]['left'])
+
+        if self.nodes[node]['right'] is None:
+            right = 0
+        else:
+            right = self._depth(self.nodes[node]['right'])
+
+        max_value = max(left, right)
+        return 1 + max_value
 
     def depth(self):
         '''Returns the total number of levels in the tree.'''
-        return self._depth(self.nodes[self.start])
+        if self.start is None:
+            return 0
+        return self._depth(self.start)
 
     def balance(self):
         '''Returns a positive or negative value representing the bst balanced.'''
+        if self.start is None:
+            return 0
         depth_left = self._depth(self.nodes[self.start]['left'])
         depth_right = self._depth(self.nodes[self.start]['right'])
         return depth_left-depth_right
