@@ -41,22 +41,27 @@ class bst():
 
     def _depth(self, node):
         '''Helper method for depth.'''
-        # if node is None:
-        #     return
-        print 'NODE: {}'.format(node)
-        # import pdb; pdb.set_trace()
+        _node = self.nodes.get(node, 0)
+        if _node is 0:
+            return 0
+        # print _node
+        # left = self.nodes[node].get('left', 0)
+        # print left
+        # right = self.nodes[node].get('right', 0)
+        # print right
+
         if (self.nodes[node]['left'] is None) and (self.nodes[node]['right'] is None):
             return 1
 
-        if self.nodes[node]['left'] is None:
-            left = 0
-        else:
-            left = self._depth(self.nodes[node]['left'])
+        # if self.nodes[node]['left'] is None:
+        #     left = 0
+        # else:
+        left = self._depth(self.nodes[node]['left'])
 
-        if self.nodes[node]['right'] is None:
-            right = 0
-        else:
-            right = self._depth(self.nodes[node]['right'])
+        # if self.nodes[node]['right'] is None:
+        #     right = 0
+        # else:
+        right = self._depth(self.nodes[node]['right'])
 
         max_value = max(left, right)
         return 1 + max_value
