@@ -1,10 +1,11 @@
 class bst():
     def __init__(self):
+        '''Initialize a bst with a start value and dictionary of nodes.'''
         self.start = None
         self.nodes = {}
 
     def _insert(self, node, val):
-        """Recursive helper method for insert."""
+        '''Recursive helper method for insert.'''
         if node < val:
             if self.nodes[node]['right'] is None:
                 self.nodes[node]['right'] = val
