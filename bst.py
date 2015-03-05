@@ -8,8 +8,6 @@ class bst():
         if node < val:
             if self.nodes[node]['right'] is None:
                 self.nodes[node]['right'] = val
-                print 'val: {}'.format(val)
-                print self.nodes[node]['right']
                 self.nodes[val] = {'left': None, 'right': None}
             else:
                 self._insert(self.nodes[node]['right'], val)
@@ -40,36 +38,18 @@ class bst():
         return len(self.nodes)
 
     def _depth(self, node):
-        '''Helper method for depth.'''
-        _node = self.nodes.get(node, 0)
-        if _node is 0:
+        '''Reursive helper method for depth.'''
+        _node = self.nodes.get(node)
+        if _node is None:
             return 0
-        # print _node
-        # left = self.nodes[node].get('left', 0)
-        # print left
-        # right = self.nodes[node].get('right', 0)
-        # print right
-
-        if (self.nodes[node]['left'] is None) and (self.nodes[node]['right'] is None):
+        if (_node['left'] is None) and (_node['right'] is None):
             return 1
-
-        # if self.nodes[node]['left'] is None:
-        #     left = 0
-        # else:
         left = self._depth(self.nodes[node]['left'])
-
-        # if self.nodes[node]['right'] is None:
-        #     right = 0
-        # else:
         right = self._depth(self.nodes[node]['right'])
-
-        max_value = max(left, right)
-        return 1 + max_value
+        return 1 + max(left, right)
 
     def depth(self):
         '''Returns the total number of levels in the tree.'''
-        if self.start is None:
-            return 0
         return self._depth(self.start)
 
     def balance(self):
