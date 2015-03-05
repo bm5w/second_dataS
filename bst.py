@@ -16,7 +16,6 @@ class bst():
             if self.nodes[node]['left'] is None:
                 self.nodes[node]['left'] = val
                 self.nodes[val] = {'left': None, 'right': None}
-                return depth
             else:
                 self._insert(self.nodes[node]['left'], val)
 
