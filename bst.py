@@ -95,12 +95,11 @@ class bst():
             yield "\t%s -> null%s;" % (node, r)
 
     def print_dot(self):
+        # To run me do this from cmd line: python bst.py > temp.png
         import subprocess
         dot_graph = self.get_dot()
-        print dot_graph
         t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE)
         t.communicate(dot_graph)
-
 
 
 if __name__ == '__main__':
