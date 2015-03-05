@@ -1,3 +1,6 @@
+import random
+
+
 class bst():
     def __init__(self):
         '''Initialize a bst with a start value and dictionary of nodes.'''
@@ -7,16 +10,16 @@ class bst():
     def _insert(self, node, val):
         '''Recursive helper method for insert.'''
         if node < val:
-            if self.nodes[node]['right'] is None:
+            if self.nodes[node].get('right') is None:
                 self.nodes[node]['right'] = val
-                self.nodes[val] = {'left': None, 'right': None}
+                self.nodes[val] = {}
             else:
                 self._insert(self.nodes[node]['right'], val)
         else:
             # import pdb; pdb.set_trace()
-            if self.nodes[node]['left'] is None:
+            if self.nodes[node].get('left') is None:
                 self.nodes[node]['left'] = val
-                self.nodes[val] = {'left': None, 'right': None}
+                self.nodes[val] = {}
             else:
                 self._insert(self.nodes[node]['left'], val)
 
@@ -28,7 +31,7 @@ class bst():
             self.start = val
             self.nodes[val] = {'left': None, 'right': None}
         else:
-            self.depth = self._insert(self.start, val)
+            self._insert(self.start, val)
 
     def contains(self, val):
         '''Will return True if the value is in the bst.'''
@@ -43,10 +46,10 @@ class bst():
         _node = self.nodes.get(node)
         if _node is None:
             return 0
-        if (_node['left'] is None) and (_node['right'] is None):
+        if (_node.get('left') is None) and (_node.get('right') is None):
             return 1
-        left = self._depth(self.nodes[node]['left'])
-        right = self._depth(self.nodes[node]['right'])
+        left = self._depth(self.nodes[node].get('left'))
+        right = self._depth(self.nodes[node].get('right'))
         return 1 + max(left, right)
 
     def depth(self):
@@ -54,9 +57,61 @@ class bst():
         return self._depth(self.start)
 
     def balance(self):
-        '''Returns a positive or negative value representing the bst balanced.'''
+        '''Returns a positive or negative val representing the bst balanced.'''
         if self.start is None:
             return 0
-        depth_left = self._depth(self.nodes[self.start]['left'])
-        depth_right = self._depth(self.nodes[self.start]['right'])
+        depth_left = self._depth(self.nodes[self.start].get('left'))
+        depth_right = self._depth(self.nodes[self.start].get('right'))
         return depth_left-depth_right
+
+    def get_dot(self):
+        """return the tree with root 'self' as a dot graph for visualization"""
+        return "digraph G{\n%s}" % ("" if self.start is None else (
+            "\t%s;\n%s\n" % (
+                self.start,
+                "\n".join(self._get_dot(self.start))
+            )
+        ))
+
+    def _get_dot(self, node):
+        """recursively prepare a dot graph entry for this node."""
+        left = self.nodes[node].get('left')
+        right = self.nodes[node].get('right')
+        if left is not None:
+            yield "\t%s -> %s;" % (node, left)
+            for i in self._get_dot(left):
+                yield i
+        elif right is not None:
+            r = random.randint(0, 1e9)
+            yield "\tnull%s [shape=point];" % r
+            yield "\t%s -> null%s;" % (node, r)
+        if right is not None:
+            yield "\t%s -> %s;" % (node, right)
+            for i in self._get_dot(right):
+                yield i
+        elif left is not None:
+            r = random.randint(0, 1e9)
+            yield "\tnull%s [shape=point];" % r
+            yield "\t%s -> null%s;" % (node, r)
+
+    def print_dot(self):
+        import subprocess
+        dot_graph = self.get_dot()
+        print dot_graph
+        t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE)
+        t.communicate(dot_graph)
+
+
+
+if __name__ == '__main__':
+    b = bst()
+    b.start = 5
+    b.nodes = {
+       5:{'left': 2, 'right': 10},
+       2:{'left': None, 'right': None},
+       10:{'left': 7, 'right': 11},
+       7:{'left': 6, 'right': None},
+       6:{'left': None, 'right': None},
+       11:{'left': None, 'right': None}
+    }
+    b.print_dot()
