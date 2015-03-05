@@ -16,7 +16,6 @@ class bst():
             else:
                 self._insert(self.nodes[node]['right'], val)
         else:
-            # import pdb; pdb.set_trace()
             if self.nodes[node].get('left') is None:
                 self.nodes[node]['left'] = val
                 self.nodes[val] = {}
@@ -65,7 +64,7 @@ class bst():
         return depth_left-depth_right
 
     def get_dot(self):
-        """return the tree with root 'self' as a dot graph for visualization"""
+        '''Return the tree with root 'self' as a dot graph for visualization'''
         return "digraph G{\n%s}" % ("" if self.start is None else (
             "\t%s;\n%s\n" % (
                 self.start,
@@ -100,6 +99,22 @@ class bst():
         dot_graph = self.get_dot()
         t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE)
         t.communicate(dot_graph)
+
+    def in_order(self):
+        '''Return the values in the tree using in-order traversal.'''
+        pass
+
+    def pre_order(self):
+        '''return the values in the tree using pre-order traversal.'''
+        pass
+
+    def post_order(self):
+        '''Return the values in the tree using post-order traversal.'''
+        pass
+
+    def breadth_first(self):
+        '''Return the values in the tree using breadth-first traversal.'''
+        pass
 
 
 if __name__ == '__main__':
