@@ -1,4 +1,5 @@
 # second_dataS
+[![Travis](https://travis-ci.org/bm5w/second_dataS.svg?branch=master)](https://travis-ci.org/bm5w/second_dataS.svg?branch=master)
 BST (Binary Search Tree): An implmentation of a BST utilizing a dictionatary
 of dictionaries to keep track of each node and it's left and right childrend.
 While this is an unordinary method, where the ordinary method would use a
