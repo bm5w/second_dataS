@@ -159,18 +159,19 @@ class bst():
         visited = []
         if self.start is None:
             return
-        # yield self.start
-        # visited.append(self.start)
-        start_visited = visited
+        visited.append(self.start)
+        start_visited = [self.start]
         while len(visited) < len(self.nodes):
-            list_of_nodes_at_current_depth = []
+            list_of_nodes_at_next_depth = []
             for node_ in start_visited:
-                for k, v in self.nodes[node_].iteritems():
-                    visited.append(v)
-                    list_of_nodes_at_current_depth.append(v)
-                    yield v
-            start_visited = list_of_nodes_at_current_depth
-            if len(list_of_nodes_at_current_depth) == 0:
+                visited.append(node_)
+                if self.nodes[node_].get('left'):
+                    list_of_nodes_at_next_depth.append(self.nodes[node_].get('left'))
+                if self.nodes[node_].get('right'):
+                    list_of_nodes_at_next_depth.append(self.nodes[node_].get('right'))
+                yield node_
+            start_visited = list_of_nodes_at_next_depth
+            if len(list_of_nodes_at_next_depth) == 0:
                 break
 
 
@@ -198,8 +199,16 @@ class bst():
 
 if __name__ == '__main__':
     b = bst()
-    b.insert(25)
-    for i in range(1, 50):
-        b.insert(i)
+    b.start = 5
+    b.nodes = {
+       5:{'left': 4, 'right': 10},
+       4:{'left': 3, 'right': None},
+       10:{'left': 7, 'right': 11},
+       7:{'left': 6, 'right': None},
+       6:{'left': None, 'right': None},
+       11:{'left': None, 'right': None},
+       3:{'left': 2, 'right': None},
+       2:{'left': None, 'right': None}
+    }
 
     b.print_dot()
