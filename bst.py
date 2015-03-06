@@ -28,7 +28,7 @@ class bst():
             return None
         if self.start is None:
             self.start = val
-            self.nodes[val] = {'left': None, 'right': None}
+            self.nodes[val] = {}
         else:
             self._insert(self.start, val)
 
@@ -102,16 +102,13 @@ class bst():
 
     def _in_order(self, node):
         '''Helper function for in_order method.'''
-        left = self.nodes[node].get('left')
-        right = self.nodes[node].get('right')
-
-        if left:
-            for elem in self._in_order(left):
-                yield elem
+        if not node:
+            return
+        for elem in self._in_order(self.nodes[node].get('left', [])):
+            yield elem
         yield node
-        if right:
-            for elem in self._in_order(right):
-                yield elem
+        for elem in self._in_order(self.nodes[node].get('right', [])):
+            yield elem
 
     def in_order(self):
         '''Return the values in the tree using in-order traversal.'''
@@ -120,16 +117,13 @@ class bst():
 
     def _pre_order(self, node):
         '''Helper function for pre_order method.'''
-        left = self.nodes[node].get('left')
-        right = self.nodes[node].get('right')
-
+        if not node:
+            return
         yield node
-        if left:
-            for elem in self._pre_order(left):
-                yield elem
-        if right:
-            for elem in self._pre_order(right):
-                yield elem
+        for elem in self._pre_order(self.nodes[node].get('left', [])):
+            yield elem
+        for elem in self._pre_order(self.nodes[node].get('right', [])):
+            yield elem
 
     def pre_order(self):
         '''Return the values in the tree using pre-order traversal.'''
@@ -138,15 +132,12 @@ class bst():
 
     def _post_order(self, node):
         '''Helper function for post_order method.'''
-        left = self.nodes[node].get('left')
-        right = self.nodes[node].get('right')
-
-        if left:
-            for elem in self._post_order(left):
-                yield elem
-        if right:
-            for elem in self._post_order(right):
-                yield elem
+        if not node:
+            return
+        for elem in self._post_order(self.nodes[node].get('left', [])):
+            yield elem
+        for elem in self._post_order(self.nodes[node].get('right', [])):
+            yield elem
         yield node
 
     def post_order(self):
