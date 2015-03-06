@@ -198,14 +198,8 @@ class bst():
 
 if __name__ == '__main__':
     b = bst()
-    b.start = 5
-    b.nodes = {
-       5:{'left': 2, 'right': 10},
-       2:{'left': None, 'right': None},
-       10:{'left': 7, 'right': 11},
-       7:{'left': 6, 'right': None},
-       6:{'left': None, 'right': None},
-       11:{'left': None, 'right': None}
-    }
+    b.insert(25)
+    for i in range(1, 50):
+        b.insert(i)
 
     b.print_dot()

@@ -4,10 +4,20 @@ from bst import bst
 
 @pytest.fixture(scope='function')
 def big():
-    '''Binary tree with first node, 50.'''
+    '''A big unbalanced binary tree with first node, 50.'''
     b = bst()
     b.insert(50)
-    for i in range(100):
+    for i in range(50, 0, -1):
+        b.insert(i)
+    return b
+
+
+@pytest.fixture(scope='function')
+def big_balanced():
+    '''A big unbalanced binary tree with first node, 50.'''
+    b = bst()
+    b.insert(25)
+    for i in range(1, 50):
         b.insert(i)
     return b
 
@@ -142,10 +152,24 @@ def test_in_order(balanced):
         assert expected == actual
 
 
+def test_in_order_big(big):
+    '''Test generator in_order with big graph.'''
+    expected = range(1, 51)
+    for expected, actual in zip(expected, big.in_order()):
+        assert expected == actual
+
+
 def test_pre_order(balanced):
     '''Test generator pre_order with balanced graph.'''
     expected = [5, 4, 3, 2, 10, 7, 6, 11]
     for expected, actual in zip(expected, balanced.pre_order()):
+        assert expected == actual
+
+
+def test_pre_order_big(big):
+    '''Test generator pre_order with balanced graph.'''
+    expected = range(50, 0, -1)
+    for expected, actual in zip(expected, big.pre_order()):
         assert expected == actual
 
 
@@ -156,14 +180,49 @@ def test_post_order(balanced):
         assert expected == actual
 
 
-def test_breadth_first(balanced):
+def test_post_order_big(big):
     '''Test generator post_order with balanced graph.'''
+    expected = range(1, 51)
+    for expected, actual in zip(expected, big.post_order()):
+        assert expected == actual
+
+
+def test_breadth_first(balanced):
+    '''Test generator breadth_first with balanced graph.'''
     expected = [5, 4, 10, 3, 7, 11, 2, 6]
     for expected, actual in zip(expected, balanced.breadth_first()):
         assert expected == actual
 
+
 def test_breadth_first_unbalanced(unbalanced):
-    '''Test generator post_order with balanced graph.'''
+    '''Test generator breadth_first with balanced graph.'''
     expected = [5, 2, 10, 7, 11, 6]
     for expected, actual in zip(expected, unbalanced.breadth_first()):
         assert expected == actual
+
+
+def test_breadth_first_big(big):
+    '''Test generator breadth_first with big unbalanced graph.'''
+    expected = range(50, 0, -1)
+    for expected, actual in zip(expected, big.breadth_first()):
+        assert expected == actual
+
+def test_breadth_first_big_balanced(big_balanced):
+    '''Test generator breadth_first with big balanced graph.'''
+    expected = [25, 1, 26, 2, 27, 3, 28, 4, 29, 5, 30, 6, 31, 7, 32, 8, 33, 9,
+                34, 10, 35, 11, 36, 12, 37, 13, 38, 14, 39, 15, 40, 16, 41, 17,
+                42, 18, 43, 19, 44, 20, 45, 21, 46, 22, 47, 23, 48, 24, 49]
+    for expected, actual in zip(expected, big_balanced.breadth_first()):
+        assert expected == actual
+
+
+
+
+
+
+
+
+
+
+
+
