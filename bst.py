@@ -125,10 +125,10 @@ class bst():
 
         yield node
         if left:
-            for elem in self.in_order(left):
+            for elem in self._pre_order(left):
                 yield elem
         if right:
-            for elem in self.in_order(right):
+            for elem in self._pre_order(right):
                 yield elem
 
     def pre_order(self):
@@ -142,14 +142,14 @@ class bst():
         right = self.nodes[node].get('right')
 
         if left:
-            for elem in self.in_order(left):
+            for elem in self._post_order(left):
                 yield elem
         if right:
-            for elem in self.in_order(right):
+            for elem in self._post_order(right):
                 yield elem
         yield node
 
-    def post_order(self, node):
+    def post_order(self):
         '''Return the values in the tree using post-order traversal.'''
         for elem in self._post_order(self.start):
             yield elem
@@ -163,10 +163,14 @@ if __name__ == '__main__':
     b = bst()
     b.start = 5
     b.nodes = {
-       5:{'left': 2, 'right': 10},
-       2:{'left': None, 'right': None},
+       5:{'left': 4, 'right': 10},
+       4:{'left': 3, 'right': None},
        10:{'left': 7, 'right': 11},
        7:{'left': 6, 'right': None},
        6:{'left': None, 'right': None},
-       11:{'left': None, 'right': None}
+       11:{'left': None, 'right': None},
+       3:{'left': 2, 'right': None},
+       2:{'left': None, 'right': None}
     }
+
+    b.print_dot()

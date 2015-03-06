@@ -3,6 +3,16 @@ from bst import bst
 
 
 @pytest.fixture(scope='function')
+def big():
+    '''Binary tree with first node, 50.'''
+    b = bst()
+    b.insert(50)
+    for i in range(100):
+        b.insert(i)
+    return b
+
+
+@pytest.fixture(scope='function')
 def unbalanced():
     b = bst()
     b.start = 5
@@ -132,6 +142,19 @@ def test_in_order(balanced):
         assert expected == actual
 
 
+def test_pre_order(balanced):
+    '''Test generator pre_order with balanced graph.'''
+    expected = [5, 4, 3, 2, 10, 7, 6, 11]
+    for expected, actual in zip(expected, balanced.pre_order()):
+        assert expected == actual
+
+
+
+def test_post_order(balanced):
+    '''Test generator post_order with balanced graph.'''
+    expected = [2, 3, 4, 6, 7, 11, 10, 5]
+    for expected, actual in zip(expected, balanced.post_order()):
+        assert expected == actual
 
 
 
