@@ -156,21 +156,56 @@ class bst():
 
     def breadth_first(self):
         '''Return the values in the tree using breadth-first traversal.'''
-        pass
+        visited = []
+        if self.start is None:
+            return
+        # yield self.start
+        # visited.append(self.start)
+        start_visited = visited
+        while len(visited) < len(self.nodes):
+            list_of_nodes_at_current_depth = []
+            for node_ in start_visited:
+                for k, v in self.nodes[node_].iteritems():
+                    visited.append(v)
+                    list_of_nodes_at_current_depth.append(v)
+                    yield v
+            start_visited = list_of_nodes_at_current_depth
+            if len(list_of_nodes_at_current_depth) == 0:
+                break
+
+
+
+
+    # def breadth_first_traversal(self, start):
+    #     """Perform a full breadth-first traversal of the graph beginning at start.
+    #     Return the path when complete."""
+    #     visited = []
+    #     visited.append(start)
+    #     start_visited = visited
+    #     while True:
+    #         temp = []
+    #         for node_ in start_visited:
+    #             for i in self.neighbors(node_):
+    #                 if i not in visited:
+    #                     visited.append(i)
+    #                     temp.append(i)
+    #         start_visited = temp
+    #         if not temp:
+    #             break
+    #     return visited
+
 
 
 if __name__ == '__main__':
     b = bst()
     b.start = 5
     b.nodes = {
-       5:{'left': 4, 'right': 10},
-       4:{'left': 3, 'right': None},
+       5:{'left': 2, 'right': 10},
+       2:{'left': None, 'right': None},
        10:{'left': 7, 'right': 11},
        7:{'left': 6, 'right': None},
        6:{'left': None, 'right': None},
-       11:{'left': None, 'right': None},
-       3:{'left': 2, 'right': None},
-       2:{'left': None, 'right': None}
+       11:{'left': None, 'right': None}
     }
 
     b.print_dot()

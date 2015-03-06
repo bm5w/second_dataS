@@ -149,7 +149,6 @@ def test_pre_order(balanced):
         assert expected == actual
 
 
-
 def test_post_order(balanced):
     '''Test generator post_order with balanced graph.'''
     expected = [2, 3, 4, 6, 7, 11, 10, 5]
@@ -157,12 +156,14 @@ def test_post_order(balanced):
         assert expected == actual
 
 
+def test_breadth_first(balanced):
+    '''Test generator post_order with balanced graph.'''
+    expected = [5, 4, 10, 3, 7, 11, 2, 6]
+    for expected, actual in zip(expected, balanced.breadth_first()):
+        assert expected == actual
 
-
-
-
-
-
-
-
-
+def test_breadth_first_unbalanced(unbalanced):
+    '''Test generator post_order with balanced graph.'''
+    expected = [5, 2, 10, 7, 11, 6]
+    for expected, actual in zip(expected, unbalanced.breadth_first()):
+        assert expected == actual
