@@ -218,13 +218,13 @@ if __name__ == '__main__':
     b.start = 5
     b.nodes = {
        5:{'left': 4, 'right': 10},
-       4:{'left': 3, 'right': None},
-       10:{'left': 7, 'right': 11},
-       7:{'left': 6, 'right': None},
-       6:{'left': None, 'right': None},
-       11:{'left': None, 'right': None},
-       3:{'left': 2, 'right': None},
-       2:{'left': None, 'right': None}
+       4:{'left': 3, 'right': None, 'parent': 5},
+       10:{'left': 7, 'right': 11, 'parent': 5},
+       7:{'left': 6, 'right': None, 'parent': 10},
+       6:{'left': None, 'right': None, 'parent': 7},
+       11:{'left': None, 'right': None, 'parent': 10},
+       3:{'left': 2, 'right': None, 'parent': 4},
+       2:{'left': None, 'right': None, 'parent': 3}
     }
 
     b.print_dot()
