@@ -12,13 +12,14 @@ class bst():
         if node < val:
             if self.nodes[node].get('right') is None:
                 self.nodes[node]['right'] = val
-                self.nodes[val] = {}
+                self.nodes[val] = {'parent': node}
+
             else:
                 self._insert(self.nodes[node]['right'], val)
         else:
             if self.nodes[node].get('left') is None:
                 self.nodes[node]['left'] = val
-                self.nodes[val] = {}
+                self.nodes[val] = {'parent': node}
             else:
                 self._insert(self.nodes[node]['left'], val)
 
@@ -185,10 +186,10 @@ class bst():
         for key, value in self.nodes.iteritems():
             if value.get('left') == val:
                 value['left'] = new_node
-                return
+                break
             if value.get('right') == val:
                 value['right'] = new_node
-                return
+                break
 
 
 
