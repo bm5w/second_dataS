@@ -7,3 +7,4 @@ linked list type structure, this method allows for O(1) for 'contains' methods,
 quick size methods. The downside of this approach is that recursive methods
 for finding depth and inserting nodes are not as readable and helper methods
 are required.
+
