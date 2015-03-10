@@ -169,10 +169,15 @@ class bst():
         '''Remove val from the tree if present, return None in all cases.'''
         if val not in self.nodes:
             return
+        # No children
         elif self.nodes[val].get('left') is None and self.nodes[val].get('right') is None:
             del self.nodes[val]
             self._change_ref(val)
+        # Single child
         elif self.nodes[val].get('left') is None or self.nodes[val].get('right') is None:
+            del self.nodes[val]
+            self._change_ref(val)
+        else:
             pass
 
     def _change_ref(self, val, new_node=None):
