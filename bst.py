@@ -173,24 +173,31 @@ class bst():
         # No children
         elif self.nodes[val].get('left') is None and self.nodes[val].get('right') is None:
             del self.nodes[val]
+            if self.size == 0:
+                self.start is None
             self._change_ref(val)
         # Single child
-        elif self.nodes[val].get('left') is None or self.nodes[val].get('right') is None:
+        left = self.nodes[val].get('left')
+        right = self.nodes[val].get('right')
+        # The case where only a right child exists.
+        elif left is None:
+            self._change_ref(val, new_node=
             del self.nodes[val]
-            self._change_ref(val)
+        elif right is None:
+            del self.nodes[val]
+        # 3rd
         else:
             pass
 
+
     def _change_ref(self, val, new_node=None):
         '''Delete link to specific node.'''
-        for key, value in self.nodes.iteritems():
-            if value.get('left') == val:
-                value['left'] = new_node
-                break
-            if value.get('right') == val:
-                value['right'] = new_node
-                break
-
+        # TODO: What to do if single node
+        parent = self.nodes[val]['parent']
+        if self.nodes[parent].get('left') == val:
+            self.nodes[parent]['left'] = new_node
+        if self.nodes[parent].get('right') == val:
+            self.nodes[parent]['right'] = new_node
 
 
     # def breadth_first_traversal(self, start):
