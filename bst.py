@@ -165,6 +165,25 @@ class bst():
             if len(list_of_nodes_at_next_depth) == 0:
                 break
 
+    def delete(self, val):
+        '''Remove val from the tree if present, return None in all cases.'''
+        if val not in self.nodes:
+            return
+        elif self.nodes[val].get('left') is None and self.nodes[val].get('right') is None:
+            del self.nodes[val]
+            self._change_ref(val)
+        elif self.nodes[val].get('left') is None or self.nodes[val].get('right') is None:
+            pass
+
+    def _change_ref(self, val, new_node=None):
+        '''Delete link to specific node.'''
+        for key, value in self.nodes.iteritems():
+            if value.get('left') == val:
+                value['left'] = new_node
+                return
+            if value.get('right') == val:
+                value['right'] = new_node
+                return
 
 
 

@@ -233,7 +233,10 @@ def test_breadth_first_big_balanced(big_balanced):
         assert expect == actual
 
 
-
+def test_delete_no_descendents(balanced):
+    balanced.delete(2)
+    assert balanced.nodes[3]['left'] is None
+    assert balanced.size() == 7
 
 
 
