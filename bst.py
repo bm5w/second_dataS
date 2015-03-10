@@ -169,9 +169,9 @@ class bst():
     def left(self, node):
         return self.nodes[node].get('left')
 
-
     def right(self, node):
         return self.nodes[node].get('right')
+
 
     def delete(self, val):
         '''Remove val from the tree if present, return None in all cases.'''
@@ -217,26 +217,21 @@ class bst():
             self.nodes[left]['parent'] = right
 
             self.nodes[val]['right'] = temp.get('right')
-            self.nodes[val]['left'] = temp.get('right')
+            self.nodes[val]['left'] = temp.get('left')
             self.nodes[val]['parent'] = right
             self.delete(val)
         elif val == self.start:
-            temp = self.nodes[right]
+            temp_left = self.nodes[left]['left']
+            temp_right = self.nodes[left]['right']
 
-            self.start = right
-            self.nodes[left]['parent'] = self.start
-
-            self.nodes[self.start]['left'] = temp.get('left')
-            self.nodes[self.start]['right'] = temp.get('right')
-            del self.nodes[val]
-            new_val = 1+max(self.nodes.keys())
-            print 'new_val: {}'.format(new_val)
-            self.nodes[new_val] = {}
-            self.nodes[new_val]['left'] = temp.get('left')
-            self.nodes[new_val]['right'] = temp.get('right')
-            self.nodes[new_val]['parent'] = right
-
-            self.delete(new_val)
+            self.start = left
+            self.nodes[self.start]['left'] = val
+            self.nodes[self.start]['right'] = right
+            self.nodes[self.start]['parent'] = None
+            self.nodes[val]['left'] = temp_left
+            self.nodes[val]['right'] = temp_right
+            self.nodes[val]['parent'] = self.start
+            self.delete(val)
 
 
     def _change_ref(self, val, new_node=None):
@@ -245,8 +240,12 @@ class bst():
         temp_parent = self.nodes[val].get('parent')
         if temp_parent is None:
             self.start = new_node
+            temp = self.nodes[new_node]
             self.nodes[new_node]['left'] = self.nodes[val].get('left')
             self.nodes[new_node]['right'] = val
+            self.nodes[val]['right'] = temp.get('right')
+            self.nodes[val]['left'] = temp.get('left')
+            self.nodes[val]['parent'] = new_node
             return
         if self.nodes[temp_parent].get('left') == val:
             self.nodes[temp_parent]['left'] = new_node
