@@ -3,6 +3,32 @@ from bst import bst
 
 
 @pytest.fixture(scope='function')
+def big_complex():
+    '''A big complex binary tree with first node, 50.'''
+    b = bst()
+    b.insert(24)
+    b.insert(11)
+    b.insert(17)
+    b.insert(20)
+
+    b.insert(37)
+    b.insert(43)
+    b.insert(30)
+    b.insert(48)
+    b.insert(49)
+    b.insert(11)
+    b.insert(5)
+    b.insert(2)
+    b.insert(0)
+    remaining = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+                 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
+                 48, 49]
+    for i in remaining:
+        b.insert(i)
+    return b
+
+@pytest.fixture(scope='function')
 def big():
     '''A big unbalanced binary tree with first node, 50.'''
     b = bst()
@@ -14,7 +40,7 @@ def big():
 
 @pytest.fixture(scope='function')
 def big_balanced():
-    '''A big unbalanced binary tree with first node, 50.'''
+    '''A big balanced binary tree with first node, 50.'''
     b = bst()
     b.insert(25)
     for i in range(1, 50):
@@ -28,12 +54,13 @@ def unbalanced():
     b.start = 5
     b.nodes = {
        5:{'left': 2, 'right': 10},
-       2:{'left': None, 'right': None},
-       10:{'left': 7, 'right': 11},
-       7:{'left': 6, 'right': None},
-       6:{'left': None, 'right': None},
-       11:{'left': None, 'right': None}
+       2:{'left': None, 'right': None, 'parent': 5},
+       10:{'left': 7, 'right': 11, 'parent': 5},
+       7:{'left': 6, 'right': None, 'parent': 10},
+       6:{'left': None, 'right': None, 'parent': 7},
+       11:{'left': None, 'right': None, 'parent': 10}
     }
+
     return b
 
 
@@ -43,13 +70,13 @@ def balanced():
     b.start = 5
     b.nodes = {
        5:{'left': 4, 'right': 10},
-       4:{'left': 3, 'right': None},
-       10:{'left': 7, 'right': 11},
-       7:{'left': 6, 'right': None},
-       6:{'left': None, 'right': None},
-       11:{'left': None, 'right': None},
-       3:{'left': 2, 'right': None},
-       2:{'left': None, 'right': None}
+       4:{'left': 3, 'right': None, 'parent': 5},
+       10:{'left': 7, 'right': 11, 'parent': 5},
+       7:{'left': 6, 'right': None, 'parent': 10},
+       6:{'left': None, 'right': None, 'parent': 7},
+       11:{'left': None, 'right': None, 'parent': 10},
+       3:{'left': 2, 'right': None, 'parent': 4},
+       2:{'left': None, 'right': None, 'parent': 3}
     }
     return b
 
@@ -239,10 +266,48 @@ def test_delete_no_descendents(balanced):
     assert balanced.size() == 7
 
 
+def test_delete_one_descendent(balanced):
+    balanced.delete(3)
+    assert balanced.nodes[4]['left'] == 2
+    assert balanced.contains(3) is False
 
 
+def test_delete_descendent_one_child(balanced):
+    balanced.delete(4)
+    assert balanced.nodes[5]['left'] == 3
+    assert balanced.contains(4) is False
 
 
+def test_delete_start_no_children(empty):
+    empty.insert(10)
+    empty.delete(10)
+    assert empty.start is None
+    assert empty.size() is 0
 
 
+def test_delete_descendents_left_multiple_children(big_complex):
+    big_complex.delete(43)
+    assert big_complex.nodes[37]['right'] == 38
+    assert big_complex.nodes[38]['right'] == 48
+    assert big_complex.contains(43) is False
 
+
+def test_delete_descendents_right_multiple_children(big_complex):
+    big_complex.delete(17)
+    assert big_complex.nodes[11]['right'] == 20
+    assert big_complex.nodes[20]['right'] == 21
+
+    assert big_complex.contains(17) is False
+
+
+def test_delete_descendents_left_small_multiple_children(balanced):
+    balanced.delete(10)
+    assert balanced.nodes[5]['right'] == 7
+    assert balanced.nodes[7]['right'] == 11
+    assert balanced.contains(10) is False
+
+def test_delete_descendents_multiple_children_top(balanced):
+    balanced.delete(5)
+    assert balanced.nodes[10]['right'] == 7
+    assert balanced.nodes[10]['left'] == 4
+    assert balanced.start == 10

@@ -166,38 +166,92 @@ class bst():
             if len(list_of_nodes_at_next_depth) == 0:
                 break
 
+    def left(self, node):
+        return self.nodes[node].get('left')
+
+
+    def right(self, node):
+        return self.nodes[node].get('right')
+
     def delete(self, val):
         '''Remove val from the tree if present, return None in all cases.'''
+        print 'value: {}\nleft: {}\nright: {}'.format(val, self.nodes[val].get('left'), self.nodes[val].get('right'))
         if val not in self.nodes:
             return
         # No children
         elif self.nodes[val].get('left') is None and self.nodes[val].get('right') is None:
-            del self.nodes[val]
-            if self.size == 0:
-                self.start is None
-            self._change_ref(val)
+            if self.size() == 1:
+                self.start = None
+                del self.nodes[val]
+            else:
+                self._change_ref(val)
+                del self.nodes[val]
+            return
         # Single child
         left = self.nodes[val].get('left')
         right = self.nodes[val].get('right')
         # The case where only a right child exists.
-        elif left is None:
-            self._change_ref(val, new_node=
+        if left is None:
+            self._change_ref(val, right)
             del self.nodes[val]
         elif right is None:
+            self._change_ref(val, left)
             del self.nodes[val]
         # 3rd
-        else:
-            pass
+        elif val > self.start:  # on right side of tree
+            temp = self.nodes[left]
+            self._change_ref(val, left)
+
+            self.nodes[left]['right'] = self.nodes[val]['right']
+            self.nodes[right]['parent'] = left
+
+            self.nodes[val]['left'] = temp.get('left')
+            self.nodes[val]['right'] = temp.get('right')
+            self.nodes[val]['parent'] = left
+            self.delete(val)
+        elif val < self.start:  # on left side of tree
+            temp = self.nodes[right]
+            self._change_ref(val, right)
+
+            self.nodes[right]['left'] = self.nodes[val]['left']
+            self.nodes[left]['parent'] = right
+
+            self.nodes[val]['right'] = temp.get('right')
+            self.nodes[val]['left'] = temp.get('right')
+            self.nodes[val]['parent'] = right
+            self.delete(val)
+        elif val == self.start:
+            temp = self.nodes[right]
+
+            self.start = right
+            self.nodes[left]['parent'] = self.start
+
+            self.nodes[self.start]['left'] = temp.get('left')
+            self.nodes[self.start]['right'] = temp.get('right')
+            del self.nodes[val]
+            new_val = 1+max(self.nodes.keys())
+            print 'new_val: {}'.format(new_val)
+            self.nodes[new_val] = {}
+            self.nodes[new_val]['left'] = temp.get('left')
+            self.nodes[new_val]['right'] = temp.get('right')
+            self.nodes[new_val]['parent'] = right
+
+            self.delete(new_val)
 
 
     def _change_ref(self, val, new_node=None):
         '''Delete link to specific node.'''
         # TODO: What to do if single node
-        parent = self.nodes[val]['parent']
-        if self.nodes[parent].get('left') == val:
-            self.nodes[parent]['left'] = new_node
-        if self.nodes[parent].get('right') == val:
-            self.nodes[parent]['right'] = new_node
+        temp_parent = self.nodes[val].get('parent')
+        if temp_parent is None:
+            self.start = new_node
+            self.nodes[new_node]['left'] = self.nodes[val].get('left')
+            self.nodes[new_node]['right'] = val
+            return
+        if self.nodes[temp_parent].get('left') == val:
+            self.nodes[temp_parent]['left'] = new_node
+        if self.nodes[temp_parent].get('right') == val:
+            self.nodes[temp_parent]['right'] = new_node
 
 
     # def breadth_first_traversal(self, start):
@@ -222,16 +276,25 @@ class bst():
 
 if __name__ == '__main__':
     b = bst()
-    b.start = 5
-    b.nodes = {
-       5:{'left': 4, 'right': 10},
-       4:{'left': 3, 'right': None, 'parent': 5},
-       10:{'left': 7, 'right': 11, 'parent': 5},
-       7:{'left': 6, 'right': None, 'parent': 10},
-       6:{'left': None, 'right': None, 'parent': 7},
-       11:{'left': None, 'right': None, 'parent': 10},
-       3:{'left': 2, 'right': None, 'parent': 4},
-       2:{'left': None, 'right': None, 'parent': 3}
-    }
+    b.insert(24)
+    b.insert(11)
+    b.insert(17)
+    b.insert(20)
+
+    b.insert(37)
+    b.insert(43)
+    b.insert(30)
+    b.insert(48)
+    b.insert(49)
+    b.insert(11)
+    b.insert(5)
+    b.insert(2)
+    b.insert(0)
+    remaining = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+                 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
+                 48, 49]
+    for i in remaining:
+        b.insert(i)
 
     b.print_dot()
