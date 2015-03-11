@@ -292,6 +292,22 @@ class bst():
         if self.nodes[temp_parent].get('right') == val:
             self.nodes[temp_parent]['right'] = new_node
 
+    def jiggle(self, list=self.nodes.keys()):
+        '''Rebalance the tree.'''
+
+        # 1. Sort the tree into an ordered list
+        # 2. Identify the midpoint of the list, and insert it to the graph.
+        # 3. Split the list from the midpoint.
+        # 4. Repeat step 2.
+
+        sorted_list = sorted(list)
+        midpoint = len(sorted_list)/2
+        if midpoint == 0:
+            self.insert(sorted_list[0])
+        else: 
+            self.insert(sorted_list[midpoint])
+            self.jiggle(sorted_list[:midpoint])
+            self.jiggle(sorted_list[midpoint + 1:])
 
     # def breadth_first_traversal(self, start):
     #     """Perform a full breadth-first traversal of the graph beginning at start.
