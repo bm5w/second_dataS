@@ -333,6 +333,7 @@ class bst():
 
 if __name__ == '__main__':
     b = bst()
-    b.jiggle(range(100))
+    temp = range(20) + range(90, 100)
+    b.jiggle(temp)
 
     b.print_dot()

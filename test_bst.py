@@ -332,3 +332,17 @@ def test_jiggle_even():
     a = bst()
     a.jiggle(range(10))
     assert abs(a.balance()) <= 1
+
+
+def test_jiggle_empty():
+    a = bst()
+    a.jiggle([])
+    assert a.balance() == 0
+
+
+def test_jiggle_non_sequential():
+    a = bst()
+    temp = range(20) + range(90, 100)
+    a.jiggle(temp)
+    assert a.balance() == 0
+
