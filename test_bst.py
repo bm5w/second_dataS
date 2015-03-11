@@ -1,3 +1,4 @@
+import math
 import pytest
 from bst import bst
 
@@ -313,8 +314,21 @@ def test_delete_descendents_multiple_children_top(balanced):
     assert balanced.nodes[4]['right'] == 10
     assert balanced.nodes[4]['left'] == 3
 
+
 def test_delete_big_complex_start(big_complex):
     big_complex.delete(24)
     assert big_complex.start == 23
     assert big_complex.nodes[23]['right'] == 37
     assert big_complex.nodes[23]['left'] == 11
+
+
+def test_jiggle_odd():
+    a = bst()
+    a.jiggle(range(11))
+    assert a.balance() == 0
+
+
+def test_jiggle_even():
+    a = bst()
+    a.jiggle(range(10))
+    assert abs(a.balance()) <= 1

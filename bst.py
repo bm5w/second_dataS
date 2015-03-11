@@ -292,14 +292,16 @@ class bst():
         if self.nodes[temp_parent].get('right') == val:
             self.nodes[temp_parent]['right'] = new_node
 
-    def jiggle(self, list=self.nodes.keys()):
+    def jiggle(self, list):
         '''Rebalance the tree.'''
 
         # 1. Sort the tree into an ordered list
         # 2. Identify the midpoint of the list, and insert it to the graph.
         # 3. Split the list from the midpoint.
         # 4. Repeat step 2.
-
+        if len(list) == 0:
+            return
+        print 'list: {}'.format(list)
         sorted_list = sorted(list)
         midpoint = len(sorted_list)/2
         if midpoint == 0:
@@ -331,25 +333,6 @@ class bst():
 
 if __name__ == '__main__':
     b = bst()
-    b.insert(24)
-    b.insert(11)
-    b.insert(17)
-    b.insert(20)
-
-    b.insert(37)
-    b.insert(43)
-    b.insert(30)
-    b.insert(48)
-    b.insert(49)
-    b.insert(11)
-    b.insert(5)
-    b.insert(2)
-    b.insert(0)
-    remaining = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-                 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
-                 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
-                 48, 49]
-    for i in remaining:
-        b.insert(i)
+    b.jiggle(range(100))
 
     b.print_dot()
