@@ -176,6 +176,7 @@ class bst():
     def delete(self, val):
         '''Remove val from the tree if present, return None in all cases.'''
         print 'value: {}\nleft: {}\nright: {}'.format(val, self.nodes[val].get('left'), self.nodes[val].get('right'))
+        print 'self.start: {}'.format(self.start)
         if val not in self.nodes:
             return
         # No children
@@ -221,17 +222,56 @@ class bst():
             self.nodes[val]['parent'] = right
             self.delete(val)
         elif val == self.start:
-            temp_left = self.nodes[left]['left']
-            temp_right = self.nodes[left]['right']
-
-            self.start = left
-            self.nodes[self.start]['left'] = val
-            self.nodes[self.start]['right'] = right
-            self.nodes[self.start]['parent'] = None
-            self.nodes[val]['left'] = temp_left
-            self.nodes[val]['right'] = temp_right
-            self.nodes[val]['parent'] = self.start
+            switch_to = self.highest_val(val)
+            print 'highest_val: {}'.format(switch_to)
+            self.start = switch_to
+            self.switch_nodes(val, switch_to)
             self.delete(val)
+
+
+
+            # temp_left = self.nodes[left]['left']
+            # temp_right = self.nodes[left]['right']
+
+            # self.start = left
+            # self.nodes[self.start]['left'] = val
+            # self.nodes[self.start]['right'] = right
+            # self.nodes[self.start]['parent'] = None
+            # self.nodes[val]['left'] = temp_left
+            # self.nodes[val]['right'] = temp_right
+            # self.nodes[val]['parent'] = self.start
+            # self.delete(val)
+
+    def highest_val(self, val):
+        '''Return highest value that is less than val.'''
+        ordered_list = sorted(self.nodes.keys())
+        return ordered_list[ordered_list.index(val)-1]
+
+    def switch_nodes(self, four, eleven):
+        '''Switch references on two different nodes, effectively switching the nodes.'''
+        temp = self.nodes[four]
+        temp_left = temp.get('left')
+        temp_right = temp.get('right')
+        temp_parent = temp.get('parent')
+
+        four_left = self.nodes[eleven].get('left')
+        four_right = self.nodes[eleven].get('right')
+        four_parent = self.nodes[eleven].get('parent')
+
+        if four_left:
+            self.nodes[four]['left'] = self.nodes[eleven].get('left')
+        if four_right:
+            self.nodes[four]['right'] = self.nodes[eleven].get('right')
+        if four_parent:
+            self.nodes[four]['parent'] = self.nodes[eleven].get('parent')
+
+        if temp_left:
+            self.nodes[eleven]['left'] = temp.get('left')
+        if temp_right:
+            self.nodes[eleven]['right'] = temp.get('right')
+        if temp_parent:
+            self.nodes[eleven]['parent'] = temp.get('parent')
+
 
 
     def _change_ref(self, val, new_node=None):

@@ -306,14 +306,15 @@ def test_delete_descendents_left_small_multiple_children(balanced):
     assert balanced.nodes[7]['right'] == 11
     assert balanced.contains(10) is False
 
+
 def test_delete_descendents_multiple_children_top(balanced):
     balanced.delete(5)
     assert balanced.start == 4
     assert balanced.nodes[4]['right'] == 10
     assert balanced.nodes[4]['left'] == 3
 
-# def test_delete_big_complex_start(big_complex):
-#     balanced.delete(24)
-#     assert balanced.start == 24
-#     assert balanced.nodes[11]['right'] == 10
-#     assert balanced.nodes[11]['left'] == 5
+def test_delete_big_complex_start(big_complex):
+    big_complex.delete(24)
+    assert big_complex.start == 23
+    assert big_complex.nodes[23]['right'] == 37
+    assert big_complex.nodes[23]['left'] == 11
