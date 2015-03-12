@@ -60,7 +60,7 @@ def populated_HashTable():
     populated_HashTable = HashTable()
     length = 235886
     list_words = []
-    with open('/usr/share/dict/words') as f:
+    with open('words') as f:
         for x in range(length):
             word = f.readline().rstrip('\n')
             populated_HashTable.set(str(word), str(word))
