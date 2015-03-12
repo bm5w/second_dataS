@@ -329,8 +329,6 @@ class bst():
     #             break
     #     return visited
 
-
-
 if __name__ == '__main__':
     b = bst()
     temp = range(20) + range(90, 100)
