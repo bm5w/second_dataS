@@ -71,18 +71,3 @@ def populated_HashTable():
 def test_populated(populated_HashTable):
     for item in populated_HashTable[1]:
         assert item == populated_HashTable[0].get(item)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
