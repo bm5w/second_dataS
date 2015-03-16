@@ -40,7 +40,7 @@ def test_set(simple_HashTable):
 
 
 def test_set_error(simple_HashTable):
-    with pytest.raises(NameError):
+    with pytest.raises(KeyError):
         simple_HashTable.set(test, 'value')
 
 
