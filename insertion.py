@@ -1,5 +1,5 @@
 import time
-
+from numbers import Number
 
 def timed_func(func):
     """Decorator for timing our traversal methods."""
@@ -7,7 +7,6 @@ def timed_func(func):
         start = time.time()
         result = func(*args, **kwargs)
         elapsed = time.time() - start
-        # print "time expired: %s" % elapsed
         return (result, elapsed)
     return timed
 
@@ -20,7 +19,7 @@ def insertion(_list):
     for i in range(1, len(_list)):
 
         key = _list[i]
-        if not isinstance(key, int):
+        if not isinstance(key, Number):
             raise TypeError('Entire list must be numbers')
         position = i
 
@@ -31,8 +30,6 @@ def insertion(_list):
         _list[position] = key
 
     return _list
-
-
 
 if __name__ == '__main__':
     lengths = [10, 100, 1000, 10000]
