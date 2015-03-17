@@ -8,3 +8,4 @@ quick size methods. The downside of this approach is that recursive methods
 for finding depth and inserting nodes are not as readable and helper methods
 are required.
 
+Insertion Sort: This method will sort a list of numbers (int and floats). Insertion sort works with time complexity O(n) in the best case scenario. In the worse case, where the list is in reverse order and every value must be compared against every other number, the time complexity is O(n^2). It works well for lists that are already partially sorted. It can also sort the list as it receives it.
