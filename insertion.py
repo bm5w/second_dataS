@@ -12,24 +12,20 @@ def timed_func(func):
 
 
 @timed_func
-def insertion(_list):
-    '''Sorts a list via the insertion method.'''
-    if type(_list) is not list:
+def insertion(in_list):
+    '''Sorts a list via the insertion method.
+    Raises TypeError if not list or composed of Numbers.'''
+    if type(in_list) is not list:
         raise TypeError('Entire list must be numbers')
-    for i in range(1, len(_list)):
-
-        key = _list[i]
+    for i in range(1, len(in_list)):
+        key = in_list[i]
         if not isinstance(key, Number):
             raise TypeError('Entire list must be numbers')
         position = i
-
-        while position > 0 and _list[position-1] > key:
-            _list[position] = _list[position-1]
-            position = position-1
-
-        _list[position] = key
-
-    return _list
+        while position > 0 and in_list[position-1] > key:
+            in_list[position], in_list[position-1] = in_list[position-1], in_list[position]
+            position -= 1
+    return in_list
 
 if __name__ == '__main__':
     lengths = [10, 100, 1000, 10000]
