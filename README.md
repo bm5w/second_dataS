@@ -1,7 +1,7 @@
 [![Travis](https://travis-ci.org/bm5w/second_dataS.svg?branch=master)](https://travis-ci.org/bm5w/second_dataS.svg?branch=master)
 
-
 Insertion Sort: This method will sort a list of numbers (int and floats). Insertion sort works with time complexity O(n) in the best case scenario. In the worse case, where the list is in reverse order and every value must be compared against every other number, the time complexity is O(n^2). It works well for lists that are already partially sorted. It can also sort the list as it receives it.
+Merge Sort: This method will sort a list of numbers using merge sort. Merge sort works with a time complexity O(n) in the best case scenario. In the worse case, where the list is in reverse order, the time complexity is O(nLog(n)). Merge sort is a stable sort algorithm, meaning that it keeps the order of identical items in the list. This implementation is ~100 times faster than insertion sort, regardless of input.
 
 ### Data structures 
 
