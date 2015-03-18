@@ -50,3 +50,4 @@ def test_merge_duplicates():
 def test_merge_all_duplicates():
     input = [100]*20
     assert mergesort(input) == [100]*20
+
