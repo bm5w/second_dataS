@@ -51,3 +51,30 @@ def test_merge_all_duplicates():
     input = [100]*20
     assert mergesort(input) == [100]*20
 
+
+def test_merge_stable():
+    foo1 = Stable(100, 'foo1')
+    foo2 = Stable(100.0, 'foo2')
+    foo3 = Stable(10, 'foo3')
+    foo4 = Stable(1, 'foo4')
+    input = [foo1, foo2, foo3, foo4]
+    assert mergesort(input) == [foo4, foo3, foo1, foo2]
+
+
+class Stable(object):
+    """A class for testing stable characteristic of merge sort."""
+
+    def __init__(self, num, name):
+        self.num = num
+        self.name = name
+
+    def __cmp__(self, obj):
+        if self.num == obj.num:
+            return 0
+        elif self.num > obj.num:
+            return 1
+        else:
+            return -1
+
+    def __str__(self):
+        return str(self.num)
