@@ -40,8 +40,8 @@ def test_set(simple_HashTable):
 
 
 def test_set_error(simple_HashTable):
-    with pytest.raises(NameError):
-        simple_HashTable.set(test, 'value')
+    with pytest.raises(TypeError):
+        simple_HashTable.set(1234, 'value')
 
 
 def test_get(simple_HashTable):
@@ -71,3 +71,18 @@ def populated_HashTable():
 def test_populated(populated_HashTable):
     for item in populated_HashTable[1]:
         assert item == populated_HashTable[0].get(item)
+
+
+def test_duplicate_key(simple_HashTable):
+    simple_HashTable.set('test', 'value')
+    length = simple_HashTable.table[simple_HashTable.hash('test')]
+    simple_HashTable.set('test', 'value')
+    length_end = simple_HashTable.table[simple_HashTable.hash('test')]
+    assert length == length_end
+
+
+def test_duplicate_key_overwrites(simple_HashTable):
+    simple_HashTable.set('test', 'value')
+    simple_HashTable.set('test', 'value2')
+    assert simple_HashTable.get('test') == 'value2'
+
