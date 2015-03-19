@@ -18,4 +18,42 @@ def radixsort(input):
     # Reassign the buckets into a single list.
 
 if __name__ == "__main__":
-    t = radixsort([1,2,3,4])
+    import time
+
+    lengths = [10, 100, 1000]
+    times = []
+
+    for x in lengths:
+        start = time.time()
+        output = radixsort(range(x))
+        elapsed = time.time() - start
+        times.append(elapsed)
+    print 'Best case scenario:'
+
+    for length, tim in zip(lengths, times):
+        print 'a list of length {} was sorted in {}'.format(length, tim)
+
+    diff = []
+    for x in range(len(times)-2):
+        diff.append(times[x+1]/times[x])
+    average = reduce(lambda x, y: x+y, diff) / len(diff)
+    print 'As length increases by 10, time increases by {}'.format(average)
+
+    lengths = [10, 100, 998]
+    times = []
+
+    for x in lengths:
+        start = time.time()
+        output = radixsort(x*[1])
+        elapsed = time.time() - start
+        times.append(elapsed)
+    print 'Worse case scenario:'
+
+    for length, tim in zip(lengths, times):
+        print 'a list of length {} was sorted in {}'.format(length, tim)
+
+    diff = []
+    for x in range(len(times)-2):
+        diff.append(times[x+1]/times[x])
+    average = reduce(lambda x, y: x+y, diff) / len(diff)
+    print 'As length increases by 10, time increases by {}'.format(average)
