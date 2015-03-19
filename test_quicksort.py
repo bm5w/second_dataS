@@ -26,15 +26,15 @@ def test_quicksort_duplicate():
 
 
 def test_quicksort_large():
-    input = range(1000)
+    input = range(10000)
 
-    assert Quicksort(input).quicksort() == range(1000)
+    assert Quicksort(input).quicksort() == range(10000)
 
 
 def test_quicksort_big_floats():
-    input = [x*0.01 for x in range(0, 100)]
+    input = [x*0.01 for x in range(0, 1000)]
 
-    assert Quicksort(input).quicksort() == [x*0.01 for x in range(0, 100)]
+    assert Quicksort(input).quicksort() == [x*0.01 for x in range(0, 1000)]
 
 
 def test_wrong_type():
