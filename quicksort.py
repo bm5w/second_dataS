@@ -10,7 +10,6 @@ def quicksort(input_list):
     """Sort list with quicksort. Return TypeError if input isn't list."""
     if type(input_list) is not list:
         raise TypeError('Input type must be list.')
-    input_list = input_list
     _quicksort(input_list, 0, len(input_list)-1)
     return input_list
 
@@ -49,7 +48,7 @@ def _quicksort(input_list, start, finish):
 if __name__ == '__main__':
     import time
 
-    lengths = [10, 100, 1000, 10000, 100000, 1000000]
+    lengths = [10, 100, 1000]
     times = []
     for x in lengths:
         start = time.time()
@@ -65,11 +64,11 @@ if __name__ == '__main__':
     average = reduce(lambda x, y: x+y, diff) / len(diff)
     print 'As length increases by 10, time increases by {}'.format(average)
 
-    lengths = [10, 100, 1000, 10000, 100000, 1000000]
+    lengths = [10, 100, 998]
     times = []
     for x in lengths:
         start = time.time()
-        output = quicksort(range(x))
+        output = quicksort(x*[1])
         elapsed = time.time() - start
         times.append(elapsed)
     print 'Worse case scenario:'
