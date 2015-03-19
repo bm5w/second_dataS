@@ -47,11 +47,15 @@ def _quicksort(input_list, start, finish):
         _quicksort(input_list, center, finish)
 
 if __name__ == '__main__':
+    import time
+
     lengths = [10, 100, 1000, 10000, 100000, 1000000]
     times = []
     for x in lengths:
+        start = time.time()
         output = quicksort(range(x))
-        times.append(output[1])
+        elapsed = time.time() - start
+        times.append(elapsed)
     print 'Best case scenario:'
     for length, tim in zip(lengths, times):
         print 'a list of length {} was sorted in {}'.format(length, tim)
@@ -64,8 +68,10 @@ if __name__ == '__main__':
     lengths = [10, 100, 1000, 10000, 100000, 1000000]
     times = []
     for x in lengths:
-        output = quicksort(range(x)[::-1])
-        times.append(output[1])
+        start = time.time()
+        output = quicksort(range(x))
+        elapsed = time.time() - start
+        times.append(elapsed)
     print 'Worse case scenario:'
     for length, tim in zip(lengths, times):
         print 'a list of length {} was sorted in {}'.format(length, tim)
@@ -74,4 +80,3 @@ if __name__ == '__main__':
         diff.append(times[x+1]/times[x])
     average = reduce(lambda x, y: x+y, diff) / len(diff)
     print 'As length increases by 10, time increases by {}'.format(average)
-
