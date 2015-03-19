@@ -1,43 +1,77 @@
+"""Methods for sorting a list using the quicksort method."""
 
-class Quicksort(object):
 
-    def __init__(self, input_list):
-        if type(input_list) is not list:
-            raise TypeError('Input type must be list.')
-        self.input_list = input_list
+def swap(input_list, first, second):
+    """Swap first and second index values in inputted list."""
+    input_list[first], input_list[second] = input_list[second], input_list[first]
 
-    def swap(self, first, second):
-        self.input_list[first], self.input_list[second] = self.input_list[second], self.input_list[first]
 
-    def quicksort(self):
-        self._quicksort(0, len(self.input_list)-1)
-        return self.input_list
+def quicksort(input_list):
+    """Sort list with quicksort. Return TypeError if input isn't list."""
+    if type(input_list) is not list:
+        raise TypeError('Input type must be list.')
+    input_list = input_list
+    _quicksort(input_list, 0, len(input_list)-1)
+    return input_list
 
-    def _find_pivot(self, start, finish):
-        """Return index of median of start, finish, and middle values."""
-        if (finish-start) <= 3:
-            return finish
-        a = self.input_list[start]
-        b = self.input_list[((finish-start)/2)+start]
-        c = self.input_list[finish]
-        if a < b:
-            if b < c:
-                return ((finish-start)/2)+start
-        else:
-            if a < c:
-                return start
+
+def _find_pivot(input_list, start, finish):
+    """Return index of median of start, finish, and middle values."""
+    if (finish-start) <= 3:
         return finish
+    a = input_list[start]
+    b = input_list[((finish-start)/2)+start]
+    c = input_list[finish]
+    if a < b:
+        if b < c:
+            return ((finish-start)/2)+start
+    else:
+        if a < c:
+            return start
+    return finish
 
-    def _quicksort(self, start, finish):
-        """Recursive helper method for quicksort."""
-        if finish > start:
-            pivot_index = self._find_pivot(start, finish)
-            pivot = self.input_list[pivot_index]
-            center = start
-            for index in xrange(start, finish):
-                if self.input_list[index] <= pivot:
-                    self.swap(index, center)
-                    center += 1
-            self.swap(center, finish)
-            self._quicksort(start, center-1)
-            self._quicksort(center, finish)
+
+def _quicksort(input_list, start, finish):
+    """Recursive helper method for quicksort."""
+    if finish > start:
+        pivot_index = _find_pivot(input_list, start, finish)
+        pivot = input_list[pivot_index]
+        center = start
+        # find center, with all less than or equal on left.
+        for index in xrange(start, finish):
+            if input_list[index] <= pivot:
+                swap(input_list, index, center)
+                center += 1
+        swap(input_list, center, finish)
+        _quicksort(input_list, start, center-1)
+        _quicksort(input_list, center, finish)
+
+if __name__ == '__main__':
+    lengths = [10, 100, 1000, 10000, 100000, 1000000]
+    times = []
+    for x in lengths:
+        output = quicksort(range(x))
+        times.append(output[1])
+    print 'Best case scenario:'
+    for length, tim in zip(lengths, times):
+        print 'a list of length {} was sorted in {}'.format(length, tim)
+    diff = []
+    for x in range(len(times)-2):
+        diff.append(times[x+1]/times[x])
+    average = reduce(lambda x, y: x+y, diff) / len(diff)
+    print 'As length increases by 10, time increases by {}'.format(average)
+
+    lengths = [10, 100, 1000, 10000, 100000, 1000000]
+    times = []
+    for x in lengths:
+        output = quicksort(range(x)[::-1])
+        times.append(output[1])
+    print 'Worse case scenario:'
+    for length, tim in zip(lengths, times):
+        print 'a list of length {} was sorted in {}'.format(length, tim)
+    diff = []
+    for x in range(len(times)-2):
+        diff.append(times[x+1]/times[x])
+    average = reduce(lambda x, y: x+y, diff) / len(diff)
+    print 'As length increases by 10, time increases by {}'.format(average)
+
