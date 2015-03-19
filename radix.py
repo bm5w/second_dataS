@@ -1,6 +1,7 @@
 def radixsort(input):
     base = 10  # The number of buckets to use.
     place = 1  # IE, the 1's, 10's, or 100's place.
+    hold = -1  # A placeholder
 
     complete = False
     while not complete:
@@ -20,6 +21,12 @@ def radixsort(input):
             # - an item of value 1 % 10 --> bucket 1
             # - an item of value 5 % 10 --> bucket 5
             buckets[hold % base].append(item)
+
+            # Hold will be greater than 0 while there is a value in the list
+            # that has a number in the decimal place that has not already been
+            # iterated through.
+            if complete and hold > 0:
+                complete = False
 
         # Reassign the buckets into a single list.
         value = 0
