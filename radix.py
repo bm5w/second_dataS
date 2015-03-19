@@ -1,6 +1,13 @@
-def radixsort(input):
-    base = 10  # The number of buckets to use.
-    place = 1  # IE, the 1's, 10's, or 100's place.
+def radixsort(input_list):
+    if type(input_list[0]) is str:
+        # for case when sorting string
+        base = 256
+        string = True
+        place = 0
+    else:
+        string = False
+        base = 10  # The number of buckets to use.
+        place = 1  # IE, the 1's, 10's, or 100's place.
     hold = -1  # A placeholder
 
     complete = False
@@ -8,11 +15,17 @@ def radixsort(input):
         complete = True
 
         # Declare the number of buckets to use and create them.
-        buckets = [list() for _ in range(base)]
+        buckets = [list() for _ in xrange(base)]
 
         # Segment the input list into appropriate buckets.
-        for item in input:
-            hold = item / place
+        for item in input_list:
+            if string:
+                if place < len(item):
+                    hold = ord(item[place])
+                else:
+                    hold = 0
+            else:
+                hold = item // place
 
             # For each item in the list, append it into a bucket.
             # To determine which bucket it should go into, divide the item
@@ -20,28 +33,37 @@ def radixsort(input):
             # IE: 
             # - an item of value 1 % 10 --> bucket 1
             # - an item of value 5 % 10 --> bucket 5
-            buckets[hold % base].append(item)
+            buckets[int((hold % base))].append(item)
 
             # Hold will be greater than 0 while there is a value in the list
             # that has a number in the decimal place that has not already been
             # iterated through.
-            if complete and hold > 0:
-                complete = False
+            if string:
+                if complete and hold > len(item):
+                    complete = False
+            else:
+                if complete and hold > 0:
+                    complete = False
 
         # Reassign the buckets into a single list.
         value = 0
-        for bucketIndex in range(base):
+        for bucketIndex in xrange(base):
             placeholder = buckets[bucketIndex]
             for item in placeholder:
-                input[value] = item
-                value += 1
 
+                input_list[value] = item
+                value += 1
+        print input_list
         # Move on to the next decimal place
         # We start the loop at the 1's place, as declared in line 3,
         # do our sorting, and then multiply to place by the base, which brings
         # us to 10, the next decimal place to work with.
         # TLDR: 1 --> 10 --> 100, etc.
-        place *= base
+        if string:
+            place += 1
+        else:
+            place *= base
+    return input_list
 
 if __name__ == "__main__":
     import time

@@ -1,5 +1,5 @@
 import pytest
-from radixsort import radixsort
+from radix import radixsort
 
 
 def test_radixsort_simple():
@@ -29,12 +29,6 @@ def test_radixsort_large():
     input = range(10000)
 
     assert radixsort(input) == range(10000)
-
-
-def test_radixsort_big_floats():
-    input = [x*0.01 for x in range(0, 1000)]
-
-    assert radixsort(input) == [x*0.01 for x in range(0, 1000)]
 
 
 def test_wrong_type():
@@ -69,3 +63,14 @@ def test_radixsort_all_duplicates():
     input = [100]*20
 
     assert radixsort(input) == [100]*20
+
+
+def test_radixsort_strings():
+    input = ['c', 'b', 'a']
+
+    assert radixsort(input) == ['a', 'b', 'c']
+
+def test_radixsort_strings():
+    input = ['chrit', 'boc', 'bob', 'chris']
+
+    assert radixsort(input) == ['bob', 'boc', 'chris', 'chrit']
