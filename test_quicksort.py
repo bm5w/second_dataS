@@ -13,8 +13,8 @@ def test_quicksort():
 
 
 def test_quicksort_large():
-    input = range(10000)
-    assert quicksort(input) == range(10000)
+    input = range(1000)
+    assert quicksort(input) == range(1000)
 
 
 def test_quicksort_big_floats():
@@ -22,15 +22,15 @@ def test_quicksort_big_floats():
     assert quicksort(input) == [x*0.01 for x in range(0, 100)]
 
 
-# def test_wrong_type():
-#     input = 'x'
-#     with pytest.raises(TypeError):
-#         quicksort(input)
+def test_wrong_type():
+    input = 'x'
+    with pytest.raises(TypeError):
+        quicksort(input)
 
 
 def test_quicksort_big_reverse():
-    input = range(10000)[::-1]
-    assert quicksort(input) == range(10000)
+    input = range(1000)[::-1]
+    assert quicksort(input) == range(1000)
 
 
 def test_quicksort_big_increase_decrease():
