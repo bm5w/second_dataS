@@ -29,6 +29,13 @@ def radixsort(input):
                 input[value] = item
                 value += 1
 
+        # Move on to the next decimal place
+        # We start the loop at the 1's place, as declared in line 3,
+        # do our sorting, and then multiply to place by the base, which brings
+        # us to 10, the next decimal place to work with.
+        # TLDR: 1 --> 10 --> 100, etc.
+        place *= base
+
 if __name__ == "__main__":
     import time
 
