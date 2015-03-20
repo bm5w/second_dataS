@@ -16,5 +16,7 @@
 - [Merge Sort](https://github.com/bm5w/second_dataS/blob/master/merge.py) 
   - This method will sort a list of numbers using merge sort. Merge sort works with a time complexity O(n) in the best case scenario. In the worse case, where the list is in reverse order, the time complexity is O(nLog(n)). Merge sort is a stable sort algorithm, meaning that it keeps the order of identical items in the list. This implementation is ~100 times faster than insertion sort, regardless of input.
 - [Quick sort](https://github.com/bm5w/second_dataS/blob/master/quicksort.py)
-  - This method will sort a list of numbers uising quick sort. Quick sort works with a time complexity of O(n) in the best case scenario. IN the worse case, where the list contains all equal values, the time complexity is O(nLog(n)). Quick sort is a non-stable sort algorithm.
+  - This method will sort a list of numbers using quick sort. Quick sort works with a time complexity of O(n) in the best case scenario. In the worse case, where the list contains all equal values, the time complexity is O(nLog(n)). Quick sort is a non-stable sort algorithm.
   - Ideas from Wikipedia: Quicksort were used: http://en.wikipedia.org/wiki/Quicksort
+- [Radix sort](https://github.com/bm5w/second_dataS/blob/master/radix.py)
+  - This method will sort a list of integers or strings using the radix sort algorithm. Radix sort is a non-comparative sortting algorithm that sorts by grouping keys which share a significany position or value. At worst, the time complexity of radix sort is O(n).
