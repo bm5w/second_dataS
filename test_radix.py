@@ -67,10 +67,31 @@ def test_radixsort_all_duplicates():
 
 def test_radixsort_strings():
     input = ['c', 'b', 'a']
-
     assert radixsort(input) == ['a', 'b', 'c']
 
-def test_radixsort_strings():
-    input = ['chrit', 'boc', 'bob', 'chris']
 
+def test_radixsort_longer_strings():
+    input = ['chrit', 'boc', 'bob', 'chris']
     assert radixsort(input) == ['bob', 'boc', 'chris', 'chrit']
+
+
+def test_radixsort_strings_dupicates():
+    input = ['chrit', 'boc', 'bob', 'chris', 'chrit', 'boc', 'bob', 'chris']
+    assert radixsort(input) == ['bob', 'bob', 'boc', 'boc', 'chris', 'chris',
+                                'chrit', 'chrit']
+
+
+def test_radixsort_empty_strings():
+    input = ['', 'chrit', 'boc', 'bob', 'chris']
+    assert radixsort(input) == ['', 'bob', 'boc', 'chris', 'chrit']
+
+
+def test_radixsort_strings_spaces():
+    input = [' chrit', ' boc', ' bob', ' chris', 'chrit', 'boc', 'bob', 'chris']
+    assert radixsort(input) == ['bob', 'boc', ' bob', ' boc', 'chris', 'chrit',
+                                ' chris', ' chrit']
+
+
+def test_radixsort_strings_newline():
+    input = ['c', 'b', 'a', '\nc', '\nb', '\na']
+    assert radixsort(input) == ['a', 'b', 'c', '\na', '\nb', '\nc']

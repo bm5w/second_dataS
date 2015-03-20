@@ -1,4 +1,5 @@
 def radixsort(input_list):
+    """Sort list of integers and strings with radix sort algorithm."""
     if type(input_list[0]) is str:
         # for case when sorting string
         base = 256
